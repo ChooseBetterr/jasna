@@ -107,6 +107,8 @@ support primary restoration only.
   [examples on SLS Discord](https://discord.com/channels/1196376491815092265/1199059436199759943/1516497879684874260).
   Unlock it with a supporter key — see
   [Supporting the project](../../README.md#supporting-the-project).
+  Jasna 0.11 needs a replacement key from your official seller; 0.10 keys
+  work only in Jasna 0.10.
 - **RTX Super Resolution**: very fast, free, and needs nothing extra.
   Quality is okay. Some videos may flicker, so test on a short clip first.
 - **TVAI**: better than RTX Super Resolution and comparable to unet-4x, but
@@ -148,6 +150,8 @@ jasna --input photo.png --output restored.png
 - It is currently available only to supporters and uses the same key as
   unet-4x — see
   [Supporting the project](../../README.md#supporting-the-project).
+  Jasna 0.11 needs a replacement key from your official seller; 0.10 keys
+  work only in Jasna 0.10.
 - Expect about **7 GB VRAM** during inference, a bit more for large 4K
   images.
 
