@@ -201,7 +201,7 @@ def restore_image(
 ) -> list[np.ndarray]:
     """Detect mosaics, SDEdit-inpaint each group, composite back.
 
-    Uses the jav-restoration-v2 crop geometry the model was trained with
+    Uses the crop geometry the model was trained with
     (``sd15_crop_utils``): square crop (``compute_crop_bbox``) + resize/reflect-pad
     (``crop_and_resize_np``) + hard-mask ``paste_back``.
 
