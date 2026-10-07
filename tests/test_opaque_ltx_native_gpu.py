@@ -20,8 +20,16 @@ CANVAS_SIDES = {8192: 16, 18432: 24}
 class _Destination(ctypes.Structure):
     _fields_ = [
         ("magic", ctypes.c_uint64), ("process", ctypes.c_uint64), ("interpreter", ctypes.c_void_p),
-        ("address", ctypes.c_void_p), ("length", ctypes.c_size_t),
+        ("length", ctypes.c_size_t),
     ]
+
+
+_Write = ctypes.CFUNCTYPE(ctypes.c_int, ctypes.c_void_p, ctypes.c_void_p, ctypes.c_size_t)
+
+
+class _Sink(ctypes.Structure):
+    _fields_ = [("magic", ctypes.c_uint64), ("validate", ctypes.c_void_p),
+                ("overlap", ctypes.c_void_p), ("write", _Write), ("wipe", ctypes.c_void_p)]
 
 
 def _store(count: int = 1, resident: int = 1, quantization: str = "int8"):
@@ -35,15 +43,44 @@ def _store(count: int = 1, resident: int = 1, quantization: str = "int8"):
     capsule_pointer = ctypes.pythonapi.PyCapsule_GetPointer
     capsule_pointer.argtypes = [ctypes.py_object, ctypes.c_char_p]
     capsule_pointer.restype = ctypes.c_void_p
+    capsule_context = ctypes.pythonapi.PyCapsule_GetContext
+    capsule_context.argtypes = [ctypes.py_object]
+    capsule_context.restype = ctypes.c_void_p
     for block in range(count):
         for name in serialized:
             value = handle.get_tensor("blocks.0." + name).contiguous()
             capsule = store.destination(block, name)
-            destination = _Destination.from_address(capsule_pointer(
-                capsule, b"jasna.protection.opaque-ltx-destination.v1"))
+            pointer = capsule_pointer(capsule, b"jasna.protection.opaque-ltx-destination.v2")
+            destination = _Destination.from_address(pointer)
             assert destination.length == value.nbytes
-            ctypes.memmove(destination.address, value.data_ptr(), value.nbytes)
+            assert _Destination.length.offset == 24
+            sink = _Sink.from_address(capsule_context(capsule))
+            assert sink.write(pointer, value.data_ptr(), value.nbytes) == 0
     return store
+
+
+@pytest.mark.parametrize("quantization", ["int8", "nvfp4"])
+def test_opaque_destination_capsules_expose_only_metadata(quantization):
+    from jasna.protection import opaque_ltx
+
+    store = _store(quantization=quantization)
+    try:
+        destination = store.destination(0, "scale_shift_table")
+        sliced = opaque_ltx.slice_destination(destination, 1, 4)
+        pointer = ctypes.pythonapi.PyCapsule_GetPointer
+        pointer.argtypes = [ctypes.py_object, ctypes.c_char_p]
+        pointer.restype = ctypes.c_void_p
+        header = _Destination.from_address(pointer(sliced, b"jasna.protection.opaque-ltx-destination.v2"))
+        assert _Destination.length.offset == 24 and header.length == 4
+        assert opaque_ltx.destination_size(sliced) == 4
+        with pytest.raises(TypeError):
+            memoryview(sliced)
+        with pytest.raises(ValueError):
+            opaque_ltx.slice_destination(destination, opaque_ltx.destination_size(destination), 1)
+    finally:
+        store.close()
+    with pytest.raises(ValueError):
+        opaque_ltx.destination_size(sliced)
 
 
 def test_protected_weights_bypass_the_torch_caching_allocator_and_close_releases_them():
