@@ -8,11 +8,13 @@ import torch
 
 from jasna.ltx.kernels import supports
 from jasna.ltx.model_files import PlaceholderHandle, PlaceholderTensors
+from jasna.ltx import native
 from jasna.ltx import transformer as T
 
 pytestmark = pytest.mark.skipif(
     not torch.cuda.is_available() or not supports(torch.device("cuda")), reason="needs a supported NVIDIA GPU",
 )
+CANVAS_SIDES = {8192: 16, 18432: 24}
 
 
 class _Destination(ctypes.Structure):
@@ -103,6 +105,46 @@ def test_protected_store_uses_the_shared_block_semantics(quantization, tolerance
             x, condition.block_rows, condition.prompt_rows, context, rope.cos, rope.sin, False)
         relative = ((actual.float() - expected.float()).norm() / expected.float().norm()).item()
         assert relative < tolerance
+    finally:
+        store.close()
+
+
+@pytest.mark.parametrize("quantization", ["int8", "nvfp4"])
+@pytest.mark.parametrize("rows", list(CANVAS_SIDES))
+def test_protected_block_is_bit_identical_to_public_native_block(quantization, rows):
+    store = _store(quantization=quantization)
+    handle = PlaceholderHandle(PlaceholderTensors(quantization, "distilled"))
+    specs = {name.split(".", 2)[2]: spec for name, spec in handle.tensor_specs().items()
+             if name.startswith("blocks.0.")}
+    weights = {name: handle.get_tensor("blocks.0." + name).cuda() for name in specs}
+    public = native.load(torch.device("cuda"), specs)
+    assert public is not None
+    dim = weights["scale_shift_table"].shape[1]
+    generator = torch.Generator(device="cuda").manual_seed(rows + (1 if quantization == "nvfp4" else 0))
+    x = torch.randn(1, rows, dim, generator=generator, device="cuda").to(torch.bfloat16)
+    condition = T.StepConditioning(
+        block_rows=(torch.randn(1, 2, 9, dim, generator=generator, device="cuda") * .1).to(torch.bfloat16),
+        output_rows=torch.zeros(1, 2, dim, dtype=torch.bfloat16, device="cuda"),
+        prompt_rows=(torch.randn(1, 1, 2, dim, generator=generator, device="cuda") * .1).to(torch.bfloat16),
+    )
+    context = torch.randn(1, 1024, dim, generator=generator, device="cuda").to(torch.bfloat16)
+    side = CANVAS_SIDES[rows]
+    rope = T.build_rope(16, side, side, dim=dim, heads=T.HEADS, device=torch.device("cuda"))
+    linears = [tensor for name in T.LINEAR_NAMES for tensor in native._linear_tensors(weights, name)]
+    prompt = public.block.prompt_key_value(
+        linears, weights["attn2.k_norm.weight"], weights["prompt_scale_shift_table"],
+        condition.prompt_rows, context,
+    )
+    expected = public(weights, x, condition, prompt, rope)
+    try:
+        store.finalize()
+        store.begin_step(rows, 1, False)
+        store.activate(0)
+        actual = store.block_forward(
+            x, condition.block_rows, condition.prompt_rows, context, rope.cos, rope.sin, False)
+        torch.cuda.synchronize()
+        if not torch.equal(actual, expected):
+            pytest.fail("protected and public native block outputs differ")
     finally:
         store.close()
 
