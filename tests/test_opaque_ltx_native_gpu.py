@@ -99,9 +99,11 @@ def test_protected_weights_bypass_the_torch_caching_allocator_and_close_releases
     try:
         assert allocated_after == allocated_before
         assert free_before - free_after > 200 << 20
+        assert free_before - free_after - (8 << 20) <= store.device_bytes() <= free_before - free_after
     finally:
         store.close()
         torch.cuda.synchronize()
+    assert store.device_bytes() == 0
     assert torch.cuda.memory_allocated() == allocated_before
     assert torch.cuda.mem_get_info()[0] >= free_before - (8 << 20)
     if audits is not None:
