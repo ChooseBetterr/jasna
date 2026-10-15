@@ -39,9 +39,9 @@ for each video.
 | Speed | Fast | Much slower (minutes per minute of video) |
 | Quality | Good | More detail, more natural |
 | GPU | Every supported GPU | NVIDIA only |
-| Cost | Free | Paid ([buy separately](../../README.md#supporting-the-project)) |
+| Cost | Free | For supporters ([Supporting the project](../../README.md#supporting-the-project)) |
 
-Use LTX for the videos or scenes you care about most. Before you buy it, look
+Use LTX for the videos or scenes you care about most. Before you choose it, look
 at the samples on the
 [SLS Discord channel](https://discord.com/channels/1196376491815092265/1199059436199759943)
 and run **Trial mode** to see if your PC can run it and how long it takes. Pick it in the
@@ -134,7 +134,7 @@ sharper.
 
 NVIDIA only.
 
-- **UNet 4x** (paid): trained on JAV, quality close to TVAI `iris-2`, and
+- **UNet 4x** (for supporters): trained on JAV, quality close to TVAI `iris-2`, and
   faster than TVAI. See the
   [examples on SLS Discord](https://discord.com/channels/1196376491815092265/1199059436199759943/1516497879684874260)
   and [Supporting the project](../../README.md#supporting-the-project).
@@ -177,7 +177,7 @@ model automatically:
 jasna --input photo.png --output restored.png
 ```
 
-- Paid. One License code can include SD 1.5, UNet 4x and LTX. See
+- For supporters. One License code can include SD 1.5, UNet 4x and LTX. See
   [Supporting the project](../../README.md#supporting-the-project).
 - Not included in the download. It is about **6.9 GB**. Jasna asks before it
   downloads it from
