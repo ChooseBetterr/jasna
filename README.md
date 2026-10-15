@@ -89,7 +89,9 @@ memory (VRAM)? Lower **Max Clip Size**, for example from `90` to `60`. See
 
 - [App guide](docs/en/gui.md): the queue, presets, output names, the Video
   Player and activation.
-- [SLS Discord](https://discord.gg/uNwQ4mHqgv): examples, help and settings.
+- [SLS Discord](https://discord.gg/FgrSuwZS3s): examples, help and settings.
+  Jasna has a [new channel](https://discord.com/channels/1196376491815092265/1556960822578909244);
+  older posts stay in the [old channel (archived)](https://discord.com/channels/1196376491815092265/1199059436199759943).
   Please don't be too weird.
 - Problem? Click **Logs** at the bottom of the app, then **Export** to save a
   log file. Attach it when you ask for help.
@@ -108,8 +110,9 @@ Supporters who gave **$15 USD or more on or before 14 October 2026** get LTX for
 
 **Before you choose LTX:**
 
-- Look at the samples in the
-  [SLS Discord channel](https://discord.com/channels/1196376491815092265/1199059436199759943).
+- Look at these LTX samples: [1](https://discord.com/channels/1196376491815092265/1199059436199759943/1556346988486856826), [2](https://discord.com/channels/1196376491815092265/1199059436199759943/1556337300814958684), [3](https://discord.com/channels/1196376491815092265/1199059436199759943/1555612574643388598), [4](https://discord.com/channels/1196376491815092265/1556960822578909244/1559341521575084063), [5](https://discord.com/channels/1196376491815092265/1556960822578909244/1559295317529202780), [6](https://discord.com/channels/1196376491815092265/1556960822578909244/1559205894959403121), [7](https://discord.com/channels/1196376491815092265/1556960822578909244/1559197341473574973), [8](https://discord.com/channels/1196376491815092265/1556960822578909244/1558798127195226112).
+  Explore the [new channel](https://discord.com/channels/1196376491815092265/1556960822578909244) and the
+  [old channel (archived)](https://discord.com/channels/1196376491815092265/1199059436199759943) on SLS Discord for more samples.
 - Run LTX in **Trial mode (speed test)** on your PC. It is free and shows if your GPU can
   run LTX and how long it takes. The video is not restored. See
   [What LTX needs](docs/en/models.md#what-ltx-needs).

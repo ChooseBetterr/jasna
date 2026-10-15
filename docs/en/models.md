@@ -42,8 +42,9 @@ for each video.
 | Cost | Free | For supporters ([Supporting the project](../../README.md#supporting-the-project)) |
 
 Use LTX for the videos or scenes you care about most. Before you choose it, look
-at the samples on the
-[SLS Discord channel](https://discord.com/channels/1196376491815092265/1199059436199759943)
+at these samples: [1](https://discord.com/channels/1196376491815092265/1199059436199759943/1556346988486856826), [2](https://discord.com/channels/1196376491815092265/1199059436199759943/1556337300814958684), [3](https://discord.com/channels/1196376491815092265/1199059436199759943/1555612574643388598), [4](https://discord.com/channels/1196376491815092265/1556960822578909244/1559341521575084063), [5](https://discord.com/channels/1196376491815092265/1556960822578909244/1559295317529202780), [6](https://discord.com/channels/1196376491815092265/1556960822578909244/1559205894959403121), [7](https://discord.com/channels/1196376491815092265/1556960822578909244/1559197341473574973), [8](https://discord.com/channels/1196376491815092265/1556960822578909244/1558798127195226112)
+(explore the [new channel](https://discord.com/channels/1196376491815092265/1556960822578909244) and the
+[old channel (archived)](https://discord.com/channels/1196376491815092265/1199059436199759943) on SLS Discord for more samples),
 and run **Trial mode** to see if your PC can run it and how long it takes. Pick it in the
 **Restoration Model** section, or:
 
