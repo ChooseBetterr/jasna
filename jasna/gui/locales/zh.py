@@ -561,7 +561,7 @@ ZH = {
         # About dialog
         "dialog_about_title": "关于 Jasna",
         "dialog_about_version": "版本 {version}",
-        "dialog_about_description": "JAV 马赛克修复工具",
+        "dialog_about_description": "马赛克修复工具",
         "dialog_about_credit": "灵感来源于 Lada",
         "btn_close": "关闭",
 

@@ -561,7 +561,7 @@ TH = {
         # About dialog
         "dialog_about_title": "เกี่ยวกับ Jasna",
         "dialog_about_version": "เวอร์ชัน {version}",
-        "dialog_about_description": "เครื่องมือฟื้นฟูโมเสก JAV",
+        "dialog_about_description": "เครื่องมือฟื้นฟูโมเสก",
         "dialog_about_credit": "แรงบันดาลใจจาก Lada",
         "btn_close": "ปิด",
 

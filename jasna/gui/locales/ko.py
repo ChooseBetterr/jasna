@@ -561,7 +561,7 @@ KO = {
         # About dialog
         "dialog_about_title": "Jasna 정보",
         "dialog_about_version": "버전 {version}",
-        "dialog_about_description": "JAV 모자이크 복원 도구",
+        "dialog_about_description": "모자이크 복원 도구",
         "dialog_about_credit": "Lada에서 영감을 받음",
         "btn_close": "닫기",
 

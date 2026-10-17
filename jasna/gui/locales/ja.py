@@ -561,7 +561,7 @@ JA = {
         # About dialog
         "dialog_about_title": "Jasna について",
         "dialog_about_version": "バージョン {version}",
-        "dialog_about_description": "JAV モザイク復元ツール",
+        "dialog_about_description": "モザイク復元ツール",
         "dialog_about_credit": "Lada に着想を得ています",
         "btn_close": "閉じる",
 
