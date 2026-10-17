@@ -4,7 +4,7 @@
 
 # <img width="32" src="https://github.com/Kruk2/jasna/blob/main/assets/jasna-logo.png?raw=true" /> Jasna 
 
-Jasna は JAV の動画と画像のモザイクを復元します。無料で、シンプルなアプリと
+Jasna は動画と画像のモザイクを復元します。無料で、シンプルなアプリと
 コマンドラインがあり、GPU で動きます。
 
 <img width="1200" height="907" alt="image" src="https://github.com/user-attachments/assets/d59a914b-482d-4f37-ae72-5c59eb5dc9bb" />
